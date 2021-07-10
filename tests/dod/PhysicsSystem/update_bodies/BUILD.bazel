@@ -1,0 +1,9 @@
+cc_test(
+    name = "test_update_bodies",
+    srcs = [
+        "test_update_bodies.cpp",
+    ],
+    deps = [
+        "@gtest//:gtest",
+    ],
+)

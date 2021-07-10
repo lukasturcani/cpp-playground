@@ -1,0 +1,18 @@
+cc_library(
+    name = "PhysicsBody",
+    hdrs = ["PhysicsBody.h"],
+    deps = [
+        "//src/playground:Vector3",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+)
+
+cc_library(
+    name = "PhysicsConfig",
+    hdrs = ["PhysicsConfig.h"],
+    visibility = [
+        "//visibility:public",
+    ],
+)

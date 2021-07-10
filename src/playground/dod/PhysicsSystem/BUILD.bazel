@@ -1,0 +1,17 @@
+cc_library(
+    name = "PhysicsSystem",
+    srcs = [
+        "PhysicsSystem.cpp",
+    ],
+    hdrs = [
+        "PhysicsSystem.h",
+    ],
+    deps = [
+        "//src/playground/dod:PhysicsBody",
+        "//src/playground/dod:PhysicsConfig",
+        "//src/playground:Seconds",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+)

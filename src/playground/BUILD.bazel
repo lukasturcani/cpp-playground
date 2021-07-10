@@ -1,0 +1,19 @@
+cc_library(
+    name = "Vector3",
+    hdrs = [
+        "Vector3.h",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+)
+
+cc_library(
+    name = "Seconds",
+    hdrs = [
+        "Seconds.h",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+)
