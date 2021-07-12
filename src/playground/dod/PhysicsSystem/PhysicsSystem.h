@@ -15,4 +15,9 @@ public:
         std::vector<PhysicsBody>& bodies
     ) const -> void;
 
+    auto update_bodies_2(
+        const PhysicsConfig& config,
+        const std::vector<PhysicsBody>& bodies
+    ) const -> std::vector<PhysicsBody>;
+
 };
