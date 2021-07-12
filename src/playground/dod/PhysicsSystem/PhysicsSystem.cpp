@@ -1,10 +1,10 @@
 #include "src/playground/dod/PhysicsSystem/PhysicsSystem.h"
 
 
-auto update_bodies(
+auto PhysicsSystem::update_bodies(
     const PhysicsConfig& config,
     std::vector<PhysicsBody>& bodies
-) -> void
+) const -> void
 {
     for (auto& body : bodies)
     {

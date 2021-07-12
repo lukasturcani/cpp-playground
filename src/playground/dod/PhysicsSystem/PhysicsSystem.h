@@ -13,6 +13,6 @@ public:
     auto update_bodies(
         const PhysicsConfig& config,
         std::vector<PhysicsBody>& bodies
-    ) -> void;
+    ) const -> void;
 
 };

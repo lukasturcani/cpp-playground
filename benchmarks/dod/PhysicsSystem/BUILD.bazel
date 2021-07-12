@@ -1,0 +1,13 @@
+cc_binary(
+    name = "test_physics_system",
+    srcs = [
+        "test_physics_system.cpp",
+    ],
+    deps = [
+        "@benchmark//:benchmark",
+        "//src/playground:Vector3",
+        "//src/playground/dod:PhysicsBody",
+        "//src/playground/dod:PhysicsConfig",
+        "//src/playground/dod/PhysicsSystem:PhysicsSystem",
+    ],
+)
