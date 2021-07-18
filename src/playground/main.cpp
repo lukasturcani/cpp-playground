@@ -1,4 +1,6 @@
+#include <iostream>
 #include <cstdlib>
+#include <cstdint>
 
 #include "src/playground/Vector3.h"
 #include "src/playground/dod/PhysicsBody.h"
@@ -22,6 +24,18 @@ auto main() -> int
         Seconds { 1.f },
     };
     physics_system.update_bodies(physics_config, bodies);
+
+    std::uint64_t total { 0 };
+    for (const auto& body : bodies)
+    {
+        total += body.position.x;
+        total += body.position.y;
+        total += body.position.z;
+        total += body.velocity.x;
+        total += body.velocity.y;
+        total += body.velocity.z;
+    }
+    std::cout << total << std::endl;
 
     return EXIT_SUCCESS;
 }
