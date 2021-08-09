@@ -20,4 +20,10 @@ public:
         const std::vector<PhysicsBody>& bodies
     ) const -> std::vector<PhysicsBody>;
 
+    auto update_bodies_3(
+        const PhysicsConfig& config,
+        std::vector<Vector3>& positions,
+        const std::vector<Vector3>& velocities
+    ) const -> void;
+
 };

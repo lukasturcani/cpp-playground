@@ -41,3 +41,20 @@ auto PhysicsSystem::update_bodies_2(
     }
     return result;
 }
+
+
+auto PhysicsSystem::update_bodies_3(
+    const PhysicsConfig& config,
+    std::vector<Vector3>& positions,
+    const std::vector<Vector3>& velocities
+) const -> void
+{
+    for (std::size_t i { 0 }; i < positions.size(); ++i)
+    {
+        auto& position { positions.at(i) };
+        const auto& velocity { velocities.at(i) };
+        position.x += velocity.x * config.time_step.value;
+        position.y += velocity.y * config.time_step.value;
+        position.z += velocity.z * config.time_step.value;
+    }
+}
