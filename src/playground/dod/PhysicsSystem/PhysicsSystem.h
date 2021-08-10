@@ -1,6 +1,5 @@
 #pragma once
 
-#include <immintrin.h>
 #include <vector>
 
 #include "src/playground/dod/PhysicsBody.h"
