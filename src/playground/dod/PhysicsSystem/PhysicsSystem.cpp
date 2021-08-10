@@ -1,3 +1,5 @@
+#include <immintrin.h>
+
 #include "src/playground/dod/PhysicsSystem/PhysicsSystem.h"
 
 
@@ -70,19 +72,37 @@ auto PhysicsSystem::update_bodies_4(
 ) const -> void
 {
     const auto time_step { config.time_step.value };
-    for (std::size_t i { 0 }; i < positions.x.size(); ++i)
+    __m256 simd_time_step {
+        _mm256_setr_ps(
+            config.time_step.value,
+            config.time_step.value,
+            config.time_step.value,
+            config.time_step.value,
+            config.time_step.value,
+            config.time_step.value,
+            config.time_step.value,
+            config.time_step.value
+        )
+    };
+    for (std::size_t i { 0 }; i+8 < positions.x.size(); i += 8)
     {
-        auto& x_position { positions.x.at(i) };
-        const auto& x_velocity { velocities.x.at(i) };
-        x_position += x_velocity*time_step;
+        __m256 simd_velocities { _mm256_load_ps(&velocities.x.at(i)) };
+        __m256 simd_displacements {
+            _mm256_mul_ps(simd_velocities, simd_time_step)
+        };
+        __m256 simd_positions { _mm256_load_ps(&positions.x.at(i)) };
+        __m256 simd_new_positions {
+            _mm256_add_ps(simd_positions, simd_displacements)
+        };
+        _mm256_store_ps(&positions.x.at(i), simd_new_positions);
     }
-    for (std::size_t i { 0 }; i < positions.y.size(); ++i)
+    for (std::size_t i { 0 }; i < positions.y.size(); i += 8)
     {
         auto& y_position { positions.y.at(i) };
         const auto& y_velocity { velocities.y.at(i) };
         y_position += y_velocity*time_step;
     }
-    for (std::size_t i { 0 }; i < positions.z.size(); ++i)
+    for (std::size_t i { 0 }; i < positions.z.size(); i += 8)
     {
         auto& z_position { positions.z.at(i) };
         const auto& z_velocity { velocities.z.at(i) };
