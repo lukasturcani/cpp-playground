@@ -43,6 +43,22 @@ auto get_vectors(
 }
 
 
+auto get_vector3s(
+    std::uint64_t num_vectors
+) -> Vector3s
+{
+    Vector3s vectors;
+    for (std::uint64_t i { 0 }; i < num_vectors; ++i)
+    {
+        float number { static_cast<float>(i) };
+        vectors.x.push_back(number);
+        vectors.y.push_back(number);
+        vectors.z.push_back(number);
+    }
+    return vectors;
+}
+
+
 static
 auto benchmark_physics_system(benchmark::State& state) -> void
 {
@@ -109,6 +125,32 @@ auto benchmark_physics_system_3(benchmark::State& state) -> void
     state.SetComplexityN(state.range(0));
 }
 BENCHMARK(benchmark_physics_system_3)->Range(8, 8<<12)->Complexity();
+
+
+static
+auto benchmark_physics_system_4(benchmark::State& state) -> void
+{
+
+
+    Vector3s positions { get_vector3s(state.range(0)) };
+    const Vector3s velocities {
+        get_vector3s(state.range(0)),
+    };
+    const PhysicsSystem physics_system {};
+    const PhysicsConfig physics_config {
+        Seconds { 1.f },
+    };
+    for (auto _ : state)
+    {
+        physics_system.update_bodies_4(
+            physics_config,
+            positions,
+            velocities
+        );
+    }
+    state.SetComplexityN(state.range(0));
+}
+BENCHMARK(benchmark_physics_system_4)->Range(8, 8<<12)->Complexity();
 
 
 BENCHMARK_MAIN();
