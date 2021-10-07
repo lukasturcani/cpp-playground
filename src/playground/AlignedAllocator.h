@@ -21,7 +21,7 @@ public:
     auto allocate(std::size_t num_objects) -> T*
     {
         return reinterpret_cast<T*>(
-            std::aligned_alloc(Alignment, num_objects)
+            std::aligned_alloc(Alignment, num_objects * sizeof(T))
         );
     }
 

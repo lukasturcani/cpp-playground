@@ -2,16 +2,18 @@
 
 #include <vector>
 
+#include "src/playground/AlignedAllocator.h"
 #include "src/playground/dod/PhysicsBody.h"
 #include "src/playground/dod/PhysicsConfig.h"
 
 
+template<typename Allocator = AlignedAllocator<float, 32>>
 struct Vector3s
 {
 public:
-    std::vector<float> x;
-    std::vector<float> y;
-    std::vector<float> z;
+    std::vector<float, Allocator> x;
+    std::vector<float, Allocator> y;
+    std::vector<float, Allocator> z;
 };
 
 
@@ -37,8 +39,8 @@ public:
 
     auto update_bodies_4(
         const PhysicsConfig& config,
-        Vector3s& positions,
-        const Vector3s& velocities
+        Vector3s<>& positions,
+        const Vector3s<>& velocities
     ) const -> void;
 
 };

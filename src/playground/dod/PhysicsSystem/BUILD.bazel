@@ -10,6 +10,7 @@ cc_library(
         "//src/playground/dod:PhysicsBody",
         "//src/playground/dod:PhysicsConfig",
         "//src/playground:Seconds",
+        "//src/playground:AlignedAllocator",
     ],
     visibility = [
         "//visibility:public",

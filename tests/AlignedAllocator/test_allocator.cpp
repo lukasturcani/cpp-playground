@@ -18,9 +18,20 @@ TEST(AlignedAllocator, AllocationDeallocation)
 TEST(AlignedAllocator, VectorAllocation)
 {
 
-    std::vector<float, AlignedAllocator<float, 16>> floats(32, 12.f);
+    std::vector<float, AlignedAllocator<float, 16>> floats_one(
+        32,
+        12.f
+    );
+    std::vector<float, AlignedAllocator<float, 16>> floats_two(
+        32,
+        12.f
+    );
     EXPECT_EQ(
-        reinterpret_cast<std::size_t>(&floats.at(0)) % 16,
+        reinterpret_cast<std::size_t>(&floats_one.at(0)) % 16,
+        0
+    );
+    EXPECT_EQ(
+        reinterpret_cast<std::size_t>(&floats_two.at(0)) % 16,
         0
     );
 }

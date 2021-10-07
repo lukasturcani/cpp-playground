@@ -32,11 +32,12 @@ auto get_vectors(
 ) -> std::vector<Vector3>
 {
     std::vector<Vector3> vectors;
+    float value { 0.f };
     for (std::uint64_t i { 0 }; i < num_vectors; ++i)
     {
-        float number { static_cast<float>(i) };
+        value += 1.0f;
         vectors.push_back(
-            Vector3 { number, number, number }
+            Vector3 { value, value, value }
         );
     }
     return vectors;
@@ -45,15 +46,16 @@ auto get_vectors(
 
 auto get_vector3s(
     std::uint64_t num_vectors
-) -> Vector3s
+) -> Vector3s<>
 {
-    Vector3s vectors;
+    Vector3s<> vectors;
+    float value { 0.f };
     for (std::uint64_t i { 0 }; i < num_vectors; ++i)
     {
-        float number { static_cast<float>(i) };
-        vectors.x.push_back(number);
-        vectors.y.push_back(number);
-        vectors.z.push_back(number);
+        value += 1.0f;
+        vectors.x.push_back(value);
+        vectors.y.push_back(value);
+        vectors.z.push_back(value);
     }
     return vectors;
 }
@@ -132,8 +134,10 @@ auto benchmark_physics_system_4(benchmark::State& state) -> void
 {
 
 
-    Vector3s positions { get_vector3s(state.range(0)) };
-    const Vector3s velocities {
+    Vector3s<> positions {
+        get_vector3s(state.range(0)),
+    };
+    const Vector3s<> velocities {
         get_vector3s(state.range(0)),
     };
     const PhysicsSystem physics_system {};
