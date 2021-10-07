@@ -43,4 +43,10 @@ public:
         const Vector3s<>& velocities
     ) const -> void;
 
+    auto update_bodies_5(
+        const PhysicsConfig& config,
+        Vector3s<>& positions,
+        const Vector3s<>& velocities
+    ) const -> void;
+
 };

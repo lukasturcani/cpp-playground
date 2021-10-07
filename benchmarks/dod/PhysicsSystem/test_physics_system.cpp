@@ -157,4 +157,32 @@ auto benchmark_physics_system_4(benchmark::State& state) -> void
 BENCHMARK(benchmark_physics_system_4)->Range(8, 8<<12)->Complexity();
 
 
+static
+auto benchmark_physics_system_5(benchmark::State& state) -> void
+{
+
+
+    Vector3s<> positions {
+        get_vector3s(state.range(0)),
+    };
+    const Vector3s<> velocities {
+        get_vector3s(state.range(0)),
+    };
+    const PhysicsSystem physics_system {};
+    const PhysicsConfig physics_config {
+        Seconds { 1.f },
+    };
+    for (auto _ : state)
+    {
+        physics_system.update_bodies_5(
+            physics_config,
+            positions,
+            velocities
+        );
+    }
+    state.SetComplexityN(state.range(0));
+}
+BENCHMARK(benchmark_physics_system_5)->Range(8, 8<<12)->Complexity();
+
+
 BENCHMARK_MAIN();

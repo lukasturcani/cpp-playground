@@ -149,3 +149,89 @@ auto PhysicsSystem::update_bodies_4(
         positions.z.at(i) += velocity * time_step;
     }
 }
+
+
+auto PhysicsSystem::update_bodies_5(
+    const PhysicsConfig& config,
+    Vector3s<>& positions,
+    const Vector3s<>& velocities
+) const -> void
+{
+    const float time_step { config.time_step.value };
+    __m256 simd_time_step {
+        _mm256_setr_ps(
+            time_step,
+            time_step,
+            time_step,
+            time_step,
+            time_step,
+            time_step,
+            time_step,
+            time_step
+        )
+    };
+    std::size_t i { 0 };
+    for (; i+8 <= positions.x.size(); i += 8)
+    {
+        __m256 simd_velocities {
+            _mm256_loadu_ps(&velocities.x.at(i))
+        };
+        __m256 simd_displacements {
+            _mm256_mul_ps(simd_velocities, simd_time_step)
+        };
+        __m256 simd_positions { _mm256_loadu_ps(&positions.x.at(i)) };
+        __m256 simd_new_positions {
+            _mm256_add_ps(simd_positions, simd_displacements)
+        };
+        _mm256_storeu_ps(&positions.x.at(i), simd_new_positions);
+    }
+    for (; i < positions.x.size(); ++i)
+    {
+        const float& velocity { velocities.x.at(i) };
+        positions.x.at(i) += velocity * time_step;
+    }
+
+    i = 0;
+    for (; i+8 <= positions.y.size(); i += 8)
+    {
+        __m256 simd_velocities {
+            _mm256_loadu_ps(&velocities.y.at(i))
+        };
+        __m256 simd_displacements {
+            _mm256_mul_ps(simd_velocities, simd_time_step)
+        };
+        __m256 simd_positions {
+            _mm256_loadu_ps(&positions.y.at(i))
+        };
+        __m256 simd_new_positions {
+            _mm256_add_ps(simd_positions, simd_displacements)
+        };
+        _mm256_storeu_ps(&positions.y.at(i), simd_new_positions);
+    }
+    for (; i < positions.y.size(); ++i)
+    {
+        const float& velocity { velocities.y.at(i) };
+        positions.y.at(i) += velocity * time_step;
+    }
+
+    i = 0;
+    for (; i+8 <= positions.z.size(); i += 8)
+    {
+        __m256 simd_velocities {
+            _mm256_loadu_ps(&velocities.z.at(i))
+        };
+        __m256 simd_displacements {
+            _mm256_mul_ps(simd_velocities, simd_time_step)
+        };
+        __m256 simd_positions { _mm256_loadu_ps(&positions.z.at(i)) };
+        __m256 simd_new_positions {
+            _mm256_add_ps(simd_positions, simd_displacements)
+        };
+        _mm256_storeu_ps(&positions.z.at(i), simd_new_positions);
+    }
+    for (; i < positions.z.size(); ++i)
+    {
+        const float& velocity { velocities.z.at(i) };
+        positions.z.at(i) += velocity * time_step;
+    }
+}
