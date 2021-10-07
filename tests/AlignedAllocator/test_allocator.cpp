@@ -1,16 +1,28 @@
+#include <vector>
 #include "gtest/gtest.h"
 #include "src/playground/AlignedAllocator.h"
 
 
 TEST(AlignedAllocator, AllocationDeallocation)
 {
-    AlignedAllocator<float> allocator { 16 };
+    AlignedAllocator<float, 16> allocator;
     float* floats { allocator.allocate(32) };
     EXPECT_EQ(
         reinterpret_cast<std::size_t>(&(*floats)) % 16,
         0
     );
-    allocator.deallocate(floats);
+    allocator.deallocate(floats, 32);
+}
+
+
+TEST(AlignedAllocator, VectorAllocation)
+{
+
+    std::vector<float, AlignedAllocator<float, 16>> floats(32, 12.f);
+    EXPECT_EQ(
+        reinterpret_cast<std::size_t>(&floats.at(0)) % 16,
+        0
+    );
 }
 
 
