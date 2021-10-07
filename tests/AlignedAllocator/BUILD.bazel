@@ -1,0 +1,10 @@
+cc_test(
+    name = "test_allocator",
+    srcs = [
+        "test_allocator.cpp",
+    ],
+    deps = [
+        "@gtest//:gtest",
+        "//src/playground:AlignedAllocator",
+    ],
+)

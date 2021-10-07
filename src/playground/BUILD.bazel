@@ -18,6 +18,16 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "AlignedAllocator",
+    hdrs = [
+        "AlignedAllocator.h",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+)
+
 cc_binary(
     name = "main",
     srcs = [
